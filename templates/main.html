@@ -14,7 +14,7 @@
  
  
   <h2>PA ID Converter</h2>
-  <form  action="" method="post" role="form">
+  <form  action="{{ url_for('input') }}" method="post">
     {{ form.csrf }}
     <div class="form-group">
       <label for="name">String to convert:</label>
@@ -24,27 +24,56 @@
   </form>
  
   <br>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
+  <div class="row">
+        <div class="col-md-4">
+
  
-        {% for message in messages %}
-            {% if "Oops!" not in message[1]: %}
+                {% if updated %}
+                <div class="alert alert-success">
+                  {% for x in updated %}
+                    {{x}}<br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+
+
+        </div>
+
+        <div class="col-md-4">
+          {% if already %}
+            <div class="alert alert-danger">
+            {{already}}<br><br>
+            {% for x in alreadyconv %}
+              {{x}}<br>
+            {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-md-4">
+          <form>{{ form.letter }}</form>
+                {% if letters %}
                 <div class="alert alert-info">
-                {% for x in message[1] %}
-                     <p>{{x}}</p>
-                    {% endfor %}
+                  <h1>Select any Non Words:</h1>
+                  <form  action="{{ url_for('fix') }}" method="post">
+                    <label for="letter"></label>
+                  {% for x in zipper %}
+                    <input type="checkbox" id="{{x.0}}" name="letter" value="{{x.0}}">
+                    <label for="{{x.0}}">{{x.1}}</label><br>
+                  {% endfor %}
+                  <button type="submit" class="btn btn-success">Submit</button>
+                  </form>
                 </div>
-            {% endif %}
- 
-            {% if "Oops!" in message[1]: %}
-                <div class="alert alert-warning">
-                {{ message[1] }}
-                </div>
-            {% endif %}
+                {% endif %}
+        </div>
+        {% if final %}
+        <div class="alert alert-success">
+          <h1>Updated:</h1>
+        {% for x in final %}
+        {{x}}<br>
         {% endfor %}
-            {% endif %}
-        {% endwith %}
- 
+        </div>
+        {% endif %}
+      </div>
 </div>
 <br>      
 </div>
