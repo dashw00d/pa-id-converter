@@ -12,3 +12,5 @@ name = "pypi"
 [packages]
 
 gunicorn = "*"
+flask = "*"
+wtforms = "*"
