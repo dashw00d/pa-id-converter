@@ -58,10 +58,10 @@ def input():
         for l in lines:
             n = l.split()
             for x in n:
-                if len(x) == 6 and not x.isalpha():
+                if len(x) == 6 and not x.isalpha() and x.isalnum():
                     x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
                     updated.append(x)
-                elif len(x) == 6 and x.isalpha():
+                elif len(x) == 6 and x.isalpha() and x.isalpha():
                     words.append(x)
                     x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
                     letters.append(x)
