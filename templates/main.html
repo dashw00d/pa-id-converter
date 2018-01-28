@@ -3,6 +3,7 @@
     <head>
         <title>ID Converter</title>
        <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
        <link rel="stylesheet" href="static/bootstrap-theme.min.css">
        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
  
@@ -29,7 +30,8 @@
 
  
                 {% if updated %}
-                <h3>Converted <u>Total: {{ count }}</u></h3>
+                <h4><span class="label label-warning"><i class="fa fa-check" aria-hidden="true"></i> Converted</span>
+                <span class="badge">Total: {{ count }}</span></h4>
                 <div class="alert alert-success">
                   {% for x in updated %}
                     {{x}}<br>
@@ -38,7 +40,8 @@
                 {% endif %}
 
                   {% if final %}
-                  <h3>Converted <u>Total: {{ count }}</u></h3>
+                  <h4><span class="label label-warning"><i class="fa fa-check" aria-hidden="true"></i> Converted</span>
+                  <span class="badge">Total: {{ count }}</span></h4>
                   <div class="alert alert-success">
 
                   {% for x in final %}
