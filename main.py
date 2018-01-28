@@ -54,6 +54,7 @@ def input():
         letters = []
         words = []
         alreadyconv = []
+        
 
         for l in lines:
             n = l.split()
@@ -76,8 +77,8 @@ def input():
             flash(updated)
         else:
             flash("Oops! You didn't enter anything.")
-
-    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, already=already, alreadyconv=alreadyconv, zipper=zipper)
+        count = len(updated)
+    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, already=already, alreadyconv=alreadyconv, zipper=zipper, count=count)
 
 
 @app.route("/fix", methods=['GET', 'POST'])
@@ -104,9 +105,10 @@ def fix():
                     if x == y:
                         final.append(x)
         print final
+        count = len(final)
 
     return render_template('main.html', form=form,
-                           update=updated, my_letters=my_letters, final=final)
+                           update=updated, my_letters=my_letters, final=final, count=count)
 
 
 if __name__ == "__main__":
