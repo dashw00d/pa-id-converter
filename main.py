@@ -43,22 +43,19 @@ def input():
     if request.method == 'POST':
         name = request.form['name']
         global uinput
-        uinput = name
-        ''' if request.form['prefs']:
-            prefs2 = request.form['prefs']
-            print prefs2 '''
-        print name
-        lines = name.split(' ')
         global updated
+        uinput = name
+        lines = name.split(' ')
         updated = []
         letters = []
         words = []
         alreadyconv = []
-        
 
         for l in lines:
             n = l.split()
             for x in n:
+
+                # Find likley ID's
                 if len(x) == 6 and not x.isalpha() and x.isalnum():
                     x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
                     updated.append(x)
@@ -67,15 +64,11 @@ def input():
                     x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
                     letters.append(x)
 
+                # Find already converted ID's
                 elif len(x) == 8 and x[0] == '*':
                     alreadyconv.append(x)
+
         zipper = zip(letters, words)
-        print updated
-        if form.validate():
-            # Save the comment here.
-            flash(updated)
-        else:
-            flash("Oops! You didn't enter anything.")
         count = len(updated)
     return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count)
 
@@ -85,21 +78,21 @@ def fix():
     form = ReusableForm(request.form)
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
-        test = [x.encode('UTF8') for x in updated]
-        print updated
-        print my_letters
+        conv = [x.encode('UTF8') for x in updated]
         newl = []
         final = []
-        for x in test:
+
+        # Create key cloud
+        for x in conv:
             newl.append(x)
         for x in my_letters:
             newl.append(x)
+
+        # Iterate original input with key cloud
         lines = uinput.split()
-        print newl
         for x in lines:
             if len(x) == 6:
                 x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
-                print x
                 for y in newl:
                     if x == y:
                         final.append(x)
