@@ -54,9 +54,10 @@
         </div>
 
         <div class="col-md-4">
-          {% if already %}
+          {% if alreadyconv %}
+            <h4><span class="label label-danger"><i class="fa fa-times" aria-hidden="true"></i> Warning</span>
+              <span class="badge">ID's Already Converted</span></h4>
             <div class="alert alert-danger">
-            {{already}}<br><br>
             {% for x in alreadyconv %}
               {{x}}<br>
             {% endfor %}
@@ -72,7 +73,7 @@
         <div class="col-md-4">
           <form>{{ form.letter }}</form>
                 {% if letters %}
-                <h3>Select any Non Words:</h3>
+                <h4>Select any Non Words:</h4>
                 <div class="alert alert-info">
                   <form  action="{{ url_for('fix') }}" method="post">
                     <label for="letter"></label>

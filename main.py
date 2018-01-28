@@ -68,7 +68,6 @@ def input():
                     letters.append(x)
 
                 elif len(x) == 8 and x[0] == '*':
-                    already = 'Warning: IDs Already Converted.'
                     alreadyconv.append(x)
         zipper = zip(letters, words)
         print updated
@@ -78,7 +77,7 @@ def input():
         else:
             flash("Oops! You didn't enter anything.")
         count = len(updated)
-    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, already=already, alreadyconv=alreadyconv, zipper=zipper, count=count)
+    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count)
 
 
 @app.route("/fix", methods=['GET', 'POST'])
