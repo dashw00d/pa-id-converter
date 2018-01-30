@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>ID Converter | Help</title>
+       <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+       <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ 
+    </head>
+    <body>
+
+<div class="container">
+    <div class="page-header">
+        <div class="clearfix">
+            <div class="col-md-12">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <h1 class="text-primary"><a href="{{ url_for('index') }}">PA ID Converter</a> <small>Frequently Asked Questions</small></h1>
+                </div>
+                <span class="pull-right"><a href="{{ url_for('index') }}"> Home <i class="fa fa-home" aria-hidden="true"></i></a></span>
+                <div class="col-md-4 col-sm-6 col-xs-12 text-center">
+                    
+                    <div style="display:inline-block; width:300px; height:110px; overflow:hidden;">
+                    <script type='text/javascript'><!--//<![CDATA[
+                       var m3_u = (location.protocol=='https:'?'https://www.elasticads.com/adserver/www/delivery/ajs.php':'http://www.elasticads.com/adserver/www/delivery/ajs.php');
+                       var m3_r = Math.floor(Math.random()*99999999999);
+                       if (!document.MAX_used) document.MAX_used = ',';
+                       document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+                       document.write ("?zoneid=3");
+                       document.write ('&amp;cb=' + m3_r);
+                       if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+                       document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+                       document.write ("&amp;loc=" + escape(window.location));
+                       if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+                       if (document.context) document.write ("&context=" + escape(document.context));
+                       if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+                       document.write ("'><\/scr"+"ipt>");
+                    //]]>--></script><noscript><a href='http://www.elasticads.com/adserver/www/delivery/ck.php?n=ab43752c&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://www.elasticads.com/adserver/www/delivery/avw.php?zoneid=3&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ab43752c' border='0' alt='' /></a></noscript>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        This section contains information, related to converting TX ID's to *0 format. If you cannot find an answer to your question, 
+        shoot me an email - Ryan. 
+    </div>
+
+    <br />
+
+    <div class="panel panel-default">
+    <div class="panel-heading">Why do I have too many ID’s</div>
+    <div class="panel-body">The zones archive page will sometimes have 6 character long numbers that are not TX ID’s. If this happens, I recommend just adding another number to the end each non TX ID 6 character number.</div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">What does it convert?</div>
+    <div class="panel-body">The ID converter will sift through any 6 character string; e.g. all numbers: 123456, letters and numbers: 1b3d5f and all letters: abcdef. Anything that is all letters will be displayed into a selection box. </div>
+  </div>
+
+
+</div>
+

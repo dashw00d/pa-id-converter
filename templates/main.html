@@ -14,7 +14,23 @@
 <div class="container">
  
  
-  <h2 class="text-primary">PA ID Converter</h2>
+  <div class="page-header">
+        <div class="clearfix">
+            <div class="col-md-12">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <h1 class="text-primary">PA ID Converter</h1>
+                </div>
+                <span class="pull-right"><a href="{{ url_for('help') }}"> Help <i class="fa fa-paw" aria-hidden="true"></i></a></span>
+                <div class="col-md-4 col-sm-6 col-xs-12 text-center">
+                    
+                    <div style="display:inline-block; width:300px; height:110px; overflow:hidden;">
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+    </div>
+  
   <form  action="{{ url_for('input') }}" method="post">
     {{ form.csrf }}
     <div class="form-group">

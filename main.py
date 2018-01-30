@@ -30,6 +30,10 @@ def index():
     form = Form()
     return render_template('main.html', name=name, letter=letter, form=form)
 
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
 
 @app.route("/input", methods=['GET', 'POST'])
 def input():
@@ -37,7 +41,6 @@ def input():
 
     print form.errors
     letters = None
-    already = None
     alreadyconv = None
 
     if request.method == 'POST':
