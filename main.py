@@ -73,7 +73,7 @@ def input():
 
         zipper = zip(letters, words)
         count = len(updated)
-    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count)
+    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv))
 
 
 @app.route("/fix", methods=['GET', 'POST'])
