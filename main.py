@@ -13,6 +13,7 @@ updated = []
 uinput = ''
 
 
+
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
@@ -42,17 +43,19 @@ def input():
     print form.errors
     letters = None
     alreadyconv = None
-
+    updated = []
+    letters = []
+    words = []
+    alreadyconv = []
+    zipper = None
+    count = None
     if request.method == 'POST':
         name = request.form['name']
         global uinput
         global updated
         uinput = name
         lines = name.split(' ')
-        updated = []
-        letters = []
-        words = []
-        alreadyconv = []
+
 
         for l in lines:
             n = l.split()
@@ -79,6 +82,9 @@ def input():
 @app.route("/fix", methods=['GET', 'POST'])
 def fix():
     form = ReusableForm(request.form)
+    my_letters = None
+    final = None
+    count = None
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
         conv = [x.encode('UTF8') for x in updated]
