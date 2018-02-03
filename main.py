@@ -1,23 +1,61 @@
 from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, SelectMultipleField, widgets
+from flask.ext.sqlalchemy import SQLAlchemy
 
+from flask.ext.heroku import Heroku
 
 # App config.
 DEBUG = True
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:36966@localhost/count3'
+heroku = Heroku(app)
+db = SQLAlchemy(app)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 letters = []
 updated = []
 uinput = ''
-with open('vcount.txt', 'r') as file:
-        cdata = file.readlines()
+
+
+class Counter(db.Model):
+    __tablename__ = "count"
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.String(120))
+
+    def __init__(self, number):
+        self.number = number
+
+'''
+def get_or_create(model, **kwargs):
+    instance = db.session.query(model).filter_by(**kwargs).first()
+    if instance:
+        return instance
+    else:
+        instance = model(**kwargs)
+        db.session.add(instance)
+        db.session.commit()
+        return instance
+'''
 
 def v_count():
-    cdata[0] = str(int(cdata[0]) + 1)
-    with open('vcount.txt', 'w') as file:
-            file.writelines(cdata)
+    if Counter.query.filter_by(id=1).first():
+        update_this = Counter.query.filter_by(id=1).first()
+        update_this.number = str(int(update_this.number) + 1)
+        db.session.commit()
+    else:
+        instance = Counter('1')
+        db.session.add(instance)
+        db.session.commit()
+
+    cdata = Counter.query.filter_by(id=1).first()
+    global cdata    
+    return cdata
+
+
+
+
+
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
@@ -34,8 +72,8 @@ def index():
     name = TextField('Name:', validators=[validators.required()])
     letter = MultiCheckboxField('Label', choices=letters)
     form = Form()
-    global cdata
-    return render_template('main.html', name=name, letter=letter, form=form, cdata=cdata)
+    v_count()
+    return render_template('main.html', name=name, letter=letter, form=form, cdata=cdata.number)
 
 
 @app.route('/help')
@@ -46,8 +84,7 @@ def help():
 @app.route("/input", methods=['GET', 'POST'])
 def input():
     form = ReusableForm(request.form)
-    print form.errors
-    global cdata
+
     letters = None
     alreadyconv = None
     global updated
@@ -57,12 +94,12 @@ def input():
     alreadyconv = []
     zipper = None
     count = None
+    v_count()
     if request.method == 'POST':
         name = request.form['name']
         global uinput
         uinput = name
         lines = name.split(' ')
-        v_count()
         for l in lines:
             n = l.split()
             for x in n:
@@ -82,7 +119,7 @@ def input():
 
         zipper = zip(letters, words)
         count = len(updated)
-    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv), cdata=cdata)
+    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv), cdata=cdata.number)
 
 
 @app.route("/fix", methods=['GET', 'POST'])
@@ -91,11 +128,10 @@ def fix():
     my_letters = None
     final = None
     count = None
-    global cdata
+    v_count()
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
-        conv = [x.encode('UTF8') for x in updated]
-        v_count()
+        conv = [x.encode('UTF8') for x in updated]        
         newl = []
         final = []
 
@@ -117,7 +153,7 @@ def fix():
         count = len(final)
 
     return render_template('main.html', form=form,
-                           update=updated, my_letters=my_letters, final=final, count=count, cdata=cdata)
+                           update=updated, my_letters=my_letters, final=final, count=count, cdata=cdata.number)
 
 
 if __name__ == "__main__":
