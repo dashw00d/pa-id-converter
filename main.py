@@ -95,7 +95,7 @@ def input():
     alreadyconv = []
     zipper = None
     count = None
-    
+    cdata = Counter.query.filter_by(id=1).first()
     if request.method == 'POST':
         name = request.form['name']
         global uinput
@@ -130,7 +130,7 @@ def fix():
     my_letters = None
     final = None
     count = None
-    
+    cdata = Counter.query.filter_by(id=1).first()
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
         conv = [x.encode('UTF8') for x in updated]        
