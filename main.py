@@ -26,6 +26,7 @@ class Counter(db.Model):
     def __init__(self, number):
         self.number = number
 
+cdata = Counter.query.filter_by(id=1).first()
 '''
 def get_or_create(model, **kwargs):
     instance = db.session.query(model).filter_by(**kwargs).first()
@@ -72,7 +73,7 @@ def index():
     name = TextField('Name:', validators=[validators.required()])
     letter = MultiCheckboxField('Label', choices=letters)
     form = Form()
-    v_count()
+
     return render_template('main.html', name=name, letter=letter, form=form, cdata=cdata.number)
 
 
@@ -94,10 +95,11 @@ def input():
     alreadyconv = []
     zipper = None
     count = None
-    v_count()
+    
     if request.method == 'POST':
         name = request.form['name']
         global uinput
+        v_count()
         uinput = name
         lines = name.split(' ')
         for l in lines:
@@ -128,13 +130,13 @@ def fix():
     my_letters = None
     final = None
     count = None
-    v_count()
+    
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
         conv = [x.encode('UTF8') for x in updated]        
         newl = []
         final = []
-
+        v_count()
         # Create key cloud
         for x in conv:
             newl.append(x)
@@ -149,7 +151,7 @@ def fix():
                 for y in newl:
                     if x == y:
                         final.append(x)
-        print final
+        
         count = len(final)
 
     return render_template('main.html', form=form,
