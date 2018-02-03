@@ -11,7 +11,9 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 letters = []
 updated = []
 uinput = ''
-
+vcount = 'vcount.txt'
+with open(vcount, 'r') as file:
+    cdata = file.readlines()
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -29,7 +31,8 @@ def index():
     name = TextField('Name:', validators=[validators.required()])
     letter = MultiCheckboxField('Label', choices=letters)
     form = Form()
-    return render_template('main.html', name=name, letter=letter, form=form)
+    return render_template('main.html', name=name, letter=letter, form=form, cdata=cdata)
+
 
 @app.route('/help')
 def help():
@@ -39,7 +42,6 @@ def help():
 @app.route("/input", methods=['GET', 'POST'])
 def input():
     form = ReusableForm(request.form)
-
     print form.errors
     letters = None
     alreadyconv = None
@@ -55,8 +57,10 @@ def input():
         global updated
         uinput = name
         lines = name.split(' ')
-
-
+        global cdata
+        cdata[0] = str(int(cdata[0]) + 1)
+        with open('vcount.txt', 'w') as file:
+            file.writelines(cdata)
         for l in lines:
             n = l.split()
             for x in n:
@@ -76,7 +80,7 @@ def input():
 
         zipper = zip(letters, words)
         count = len(updated)
-    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv))
+    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv), cdata=cdata)
 
 
 @app.route("/fix", methods=['GET', 'POST'])
@@ -109,7 +113,7 @@ def fix():
         count = len(final)
 
     return render_template('main.html', form=form,
-                           update=updated, my_letters=my_letters, final=final, count=count)
+                           update=updated, my_letters=my_letters, final=final, count=count, cdata=cdata)
 
 
 if __name__ == "__main__":
