@@ -2,7 +2,6 @@ from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, SelectMultipleField, widgets
 
 
-
 # App config.
 DEBUG = True
 app = Flask(__name__)
@@ -12,10 +11,13 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 letters = []
 updated = []
 uinput = ''
-vcount = 'vcount.txt'
-with open(vcount, 'r') as file:
-    cdata = file.readlines()
+with open('vcount.txt', 'r') as file:
+        cdata = file.readlines()
 
+def v_count():
+    cdata[0] = str(int(cdata[0]) + 1)
+    with open('vcount.txt', 'w') as file:
+            file.writelines(cdata)
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
@@ -32,6 +34,7 @@ def index():
     name = TextField('Name:', validators=[validators.required()])
     letter = MultiCheckboxField('Label', choices=letters)
     form = Form()
+    global cdata
     return render_template('main.html', name=name, letter=letter, form=form, cdata=cdata)
 
 
@@ -44,8 +47,10 @@ def help():
 def input():
     form = ReusableForm(request.form)
     print form.errors
+    global cdata
     letters = None
     alreadyconv = None
+    global updated
     updated = []
     letters = []
     words = []
@@ -55,15 +60,9 @@ def input():
     if request.method == 'POST':
         name = request.form['name']
         global uinput
-        global updated
         uinput = name
         lines = name.split(' ')
-        global cdata
-        with open(vcount, 'r') as file:
-            cdata = file.readlines()
-        cdata[0] = str(int(cdata[0]) + 1)
-        with open('vcount.txt', 'w') as file:
-            file.writelines(cdata)
+        v_count()
         for l in lines:
             n = l.split()
             for x in n:
@@ -92,15 +91,11 @@ def fix():
     my_letters = None
     final = None
     count = None
+    global cdata
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
         conv = [x.encode('UTF8') for x in updated]
-        global cdata
-        with open(vcount, 'r') as file:
-            cdata = file.readlines()
-        cdata[0] = str(int(cdata[0]) + 1)
-        with open('vcount.txt', 'w') as file:
-            file.writelines(cdata)
+        v_count()
         newl = []
         final = []
 
