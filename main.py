@@ -26,7 +26,7 @@ class Counter(db.Model):
     def __init__(self, number):
         self.number = number
 
-cdata = Counter.query.filter_by(id=1).first()
+
 '''
 def get_or_create(model, **kwargs):
     instance = db.session.query(model).filter_by(**kwargs).first()
@@ -73,7 +73,7 @@ def index():
     name = TextField('Name:', validators=[validators.required()])
     letter = MultiCheckboxField('Label', choices=letters)
     form = Form()
-
+    cdata = Counter.query.filter_by(id=1).first()
     return render_template('main.html', name=name, letter=letter, form=form, cdata=cdata.number)
 
 
