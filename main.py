@@ -151,7 +151,7 @@ def fix():
                 for y in newl:
                     if x == y:
                         final.append(x)
-        
+        print final
         count = len(final)
 
     return render_template('main.html', form=form,
