@@ -58,6 +58,8 @@ def input():
         uinput = name
         lines = name.split(' ')
         global cdata
+        with open(vcount, 'r') as file:
+            cdata = file.readlines()
         cdata[0] = str(int(cdata[0]) + 1)
         with open('vcount.txt', 'w') as file:
             file.writelines(cdata)
@@ -92,6 +94,12 @@ def fix():
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
         conv = [x.encode('UTF8') for x in updated]
+        global cdata
+        with open(vcount, 'r') as file:
+            cdata = file.readlines()
+        cdata[0] = str(int(cdata[0]) + 1)
+        with open('vcount.txt', 'w') as file:
+            file.writelines(cdata)
         newl = []
         final = []
 
