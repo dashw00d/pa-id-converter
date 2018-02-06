@@ -1,17 +1,19 @@
 from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, SelectMultipleField, widgets
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
-from flask.ext.heroku import Heroku
+#from flask.ext.heroku import Heroku
 
 # App config.
-DEBUG = True
+DEBUG = False
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cymghpdiqxpbmg:37ea79f90517787f13d98e62851dfccae5b4b85884ca05bc1a105bf8f53fe72e@ec2-54-83-203-198.compute-1.amazonaws.com:5432/d7ik4t62h1insf'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #heroku = Heroku(app)
 db = SQLAlchemy(app)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+
 
 letters = []
 updated = []
@@ -48,9 +50,9 @@ def v_count():
         instance = Counter('1')
         db.session.add(instance)
         db.session.commit()
-
+    global cdata
     cdata = Counter.query.filter_by(id=1).first()
-    global cdata    
+        
     return cdata
 
 
