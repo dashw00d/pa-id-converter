@@ -1,6 +1,7 @@
 from flask import Flask, render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, SelectMultipleField, widgets
 from flask_sqlalchemy import SQLAlchemy
+from functions import ZoneNames
 
 #from flask.ext.heroku import Heroku
 
@@ -41,6 +42,7 @@ def get_or_create(model, **kwargs):
         return instance
 '''
 
+
 def v_count():
     if Counter.query.filter_by(id=1).first():
         update_this = Counter.query.filter_by(id=1).first()
@@ -52,12 +54,8 @@ def v_count():
         db.session.commit()
     global cdata
     cdata = Counter.query.filter_by(id=1).first()
-        
+
     return cdata
-
-
-
-
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -97,6 +95,7 @@ def input():
     alreadyconv = []
     zipper = None
     count = None
+    blacklist = []
     cdata = Counter.query.filter_by(id=1).first()
     if request.method == 'POST':
         name = request.form['name']
@@ -111,7 +110,12 @@ def input():
                 # Find likley ID's
                 if len(x) == 6 and not x.isalpha() and x.isalnum():
                     x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
-                    updated.append(x)
+                    if x not in updated and x not in blacklist:
+                        updated.append(x)
+                    else:
+                        blacklist.append(x)
+                        updated = [y for y in updated if x != y]
+
                 elif len(x) == 6 and x.isalpha() and x.isalpha():
                     words.append(x)
                     x = '*0' + x[4] + x[5] + x[2] + x[3] + x[0] + x[1]
@@ -123,7 +127,7 @@ def input():
 
         zipper = zip(letters, words)
         count = len(updated)
-    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv), cdata=cdata.number)
+    return render_template('main.html', form=form, updated=updated, letters=letters, words=words, alreadyconv=alreadyconv, zipper=zipper, count=count, acount=len(alreadyconv), cdata=cdata.number, blacklist=blacklist)
 
 
 @app.route("/fix", methods=['GET', 'POST'])
@@ -135,7 +139,7 @@ def fix():
     cdata = Counter.query.filter_by(id=1).first()
     if request.method == 'POST':
         my_letters = request.form.getlist("letter")
-        conv = [x.encode('UTF8') for x in updated]        
+        conv = [x.encode('UTF8') for x in updated]
         newl = []
         final = []
         v_count()

@@ -69,6 +69,8 @@
         </div>
 
         <div class="col-md-4">
+
+
           {% if alreadyconv %}
             <h4><span class="label label-danger"><i class="fa fa-times" aria-hidden="true"></i> Warning</span>
               <span class="badge">ID's Already Converted ({{ acount }})</span></h4>
@@ -79,6 +81,15 @@
             </div>
           {% endif %}
 
+          {% if blacklist %}
+            <h4><span class="label label-danger"><i class="fa fa-times" aria-hidden="true"></i> Warning</span>
+              <span class="badge">Duplicate ID's Found</span></h4>
+            <div class="alert alert-danger">
+            {% for x in blacklist %}
+              {{x}}<br>
+            {% endfor %}
+            </div>
+          {% endif %}
 
 
 
