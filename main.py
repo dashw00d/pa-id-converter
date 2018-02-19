@@ -19,7 +19,7 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 letters = []
 updated = []
 uinput = ''
-
+zonenames = ZoneNames()
 
 class Counter(db.Model):
     __tablename__ = "count"
@@ -82,6 +82,18 @@ def help():
     return render_template('help.html')
 
 
+@app.route("/zones", methods=['GET', 'POST'])
+def zones():
+    name = TextField('Name:', validators=[validators.required()])
+    form = Form()
+    test = None
+    if request.method == 'POST':
+        name = request.form['name']
+        test = zonenames.convert(name)
+
+    return render_template("zones.html", form=form, name=name, test=test)
+
+
 @app.route("/input", methods=['GET', 'POST'])
 def input():
     form = ReusableForm(request.form)
@@ -100,7 +112,7 @@ def input():
     if request.method == 'POST':
         name = request.form['name']
         global uinput
-        v_count()
+        # v_count()
         uinput = name
         lines = name.split(' ')
         for l in lines:
@@ -142,7 +154,7 @@ def fix():
         conv = [x.encode('UTF8') for x in updated]
         newl = []
         final = []
-        v_count()
+        # v_count()
         # Create key cloud
         for x in conv:
             newl.append(x)

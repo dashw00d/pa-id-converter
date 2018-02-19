@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
     <head>
-        <title>ID Converter</title>
+        <title>Zones Converter</title>
        <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
        <link rel="stylesheet" href="static/bootstrap-theme.min.css">
@@ -18,9 +18,9 @@
         <div class="clearfix">
             <div class="col-md-12">
                 <div class="col-md-8 col-sm-6 col-xs-12">
-                    <h1 class="text-primary">PA ID Converter</h1>
+                    <h1 class="text-primary">PA Zones Converter | Alpha</h1>
                 </div>
-                <span class="pull-right"><a href="{{ url_for('zones') }}"> Zones <i class="fa fa-clipboard" aria-hidden="true"></i></a></span>
+                <span class="pull-right"><a href="{{ url_for('index') }}"> Home <i class="fa fa-home" aria-hidden="true"></i></a></span>
                 <span class="pull-right">&nbsp; - &nbsp;</span>
                 <span class="pull-right"><a href="{{ url_for('help') }}"> Help <i class="fa fa-paw" aria-hidden="true"></i></a></span>
                 <div class="col-md-4 col-sm-6 col-xs-12 text-center">
@@ -31,21 +31,23 @@
         </div>
     </div>
   
-  <form  action="{{ url_for('input') }}" method="post">
+  <form  action="{{ url_for('zones') }}" method="post">
     {{ form.csrf }}
     <div class="form-group">
       <label for="name">String to convert:</label>
       <textarea type="textarea" class="form-control" id="name" rows="10" name="name" placeholder="Six character strings will be converted and displayed"></textarea>
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
-    <span class="pull-right">Total Conversions:  {{cdata}}</span>
+    <!-- <span class="pull-right">Total Conversions:  {{cdata}}</span> -->
   </form>
  
   <br>
   <div class="row">
         <div class="col-md-4">
 
- 
+          {{test}}
+
+ <!--
                 {% if updated %}
                 <h4><span class="label label-warning"><i class="fa fa-check" aria-hidden="true"></i> Converted</span>
                 <span class="badge">Total: {{ count }}</span></h4>
@@ -56,20 +58,11 @@
                 </div>
                 {% endif %}
 
-                  {% if final %}
-                  <h4><span class="label label-warning"><i class="fa fa-check" aria-hidden="true"></i> Converted</span>
-                  <span class="badge">Total: {{ count }}</span></h4>
-                  <div class="alert alert-success">
-
-                  {% for x in final %}
-                  {{x}}<br>
-                  {% endfor %}
-                  </div>
-                  {% endif %}
-
+-->
 
         </div>
 
+<!--
         <div class="col-md-4">
 
 
@@ -115,7 +108,7 @@
                 
                 {% endif %}
         </div>
-
+-->
       </div>
 </div>
 <br>      
