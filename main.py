@@ -8,7 +8,7 @@ from functions import ZoneNames
 # App config.
 DEBUG = False
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://cymghpdiqxpbmg:37ea79f90517787f13d98e62851dfccae5b4b85884ca05bc1a105bf8f53fe72e@ec2-54-83-203-198.compute-1.amazonaws.com:5432/d7ik4t62h1insf'
+app.config['SQLALCHEMY_DATABASE_URI'] = ''
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #heroku = Heroku(app)
 db = SQLAlchemy(app)
