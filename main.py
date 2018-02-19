@@ -21,6 +21,7 @@ updated = []
 uinput = ''
 zonenames = ZoneNames()
 
+
 class Counter(db.Model):
     __tablename__ = "count"
     id = db.Column(db.Integer, primary_key=True)
